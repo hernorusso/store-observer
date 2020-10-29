@@ -11,8 +11,13 @@ export class Store {
     setState = (newState) =>  {
         this.state = {
             ...this.state,
-            ...newState,
+            items: [
+                ...this.state.items,
+                newState,
+            ]
         }
+        this.notify(this.state);
+        console.log(this.state)
     }
 
     getState = () => {
@@ -21,10 +26,16 @@ export class Store {
 
     subscribe = (cb) => {
         this.subscribers.push(cb);
+        return () => this.unSubscribe(cb);
     }
 
     notify = (state) => {
+        console.log('nofity state', state);
         this.subscribers.forEach(cb => cb(state));
+    }
+
+    unSubscribe = (cb) => {
+        this.subscribers = this.subscribers.filter(subs => subs !== cb)
     }
 
 }
