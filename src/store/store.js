@@ -17,7 +17,6 @@ export class Store {
             ]
         }
         this.notify(this.state);
-        console.log(this.state)
     }
 
     getState = () => {
@@ -30,7 +29,6 @@ export class Store {
     }
 
     notify = (state) => {
-        console.log('nofity state', state);
         this.subscribers.forEach(cb => cb(state));
     }
 

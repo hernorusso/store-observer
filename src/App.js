@@ -7,22 +7,26 @@ import React, {
 import { StoreContext } from './index'
 import './App.css'
 import { List } from './pages/home/list'
-import { store } from './store'
 import { AddItem } from './pages/home/list/add-item'
 
 const App = ({items}) => {
 
   const store = useContext(StoreContext)
   const [appState, setAppSate ] = useState(store.getState());
-  let count = 3;
+  const [count, setCount] = useState(2);
+  let name = count % 2 ? "Hernan" : "Mauro";
+  let id = `id_hernan_${count}`;
+  let price = `50${count}`;
+  let rowColor = count % 2 ? "green" : "orange";
+
   const onClick = useCallback(() => {
-    count++;
     store.setState({
-      id: `id_hernan_${count}`,
-      name: 'hernan',
-      price: 500,
+      id,
+      name,
+      price,
       description: 'article description',
     })
+    setCount(count + 1);
   }, [count, store]);
 
   useEffect(() => {
@@ -32,19 +36,12 @@ const App = ({items}) => {
     return store.unSubscribe();
   }, [store]);
 
-  console.log(appState, 'appState');
-
   return (
     <div className="App">
-      <List list={appState.items}/>
       <AddItem onClick={onClick}/>
+      <List list={appState.items} rowColor={rowColor}/>
     </div>
   )
 }
-
-store.subscribe((state) => {
-  console.log('subscriber cb')
-  return <App state={state}/>
-})
 
 export default App

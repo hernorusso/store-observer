@@ -4,11 +4,12 @@ export const ListItem = ({
   name,
   description,
   price,
+  rowColor,
 }) => (
   <>
-    <div>
+    <div style={{background: rowColor}}>
       <span>{name}</span>
-      <span>{description}</span>
+      <span style={{paddingLeft: "5px"}}>{description}</span>
       <span>{price}</span>
     </div>
   </>
